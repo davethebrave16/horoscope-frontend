@@ -1,5 +1,3 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 export const horoscopeApi = {
   calculateHoroscope: async (date, time, latitude, longitude, timezoneOffset = 1.0) => {
     try {
@@ -11,7 +9,7 @@ export const horoscopeApi = {
         timezone_offset_hours: timezoneOffset
       };
 
-      const response = await fetch(`${API_BASE_URL}/calculate_horoscope`, {
+      const response = await fetch(`${process.env.REACT_APP_API_POSITION}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +45,7 @@ export const horoscopeApi = {
         timezone_offset_hours: timezoneOffset
       };
 
-      const response = await fetch(`${API_BASE_URL}/calculate_aspects`, {
+      const response = await fetch(`${process.env.REACT_APP_API_ASPECTS}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +81,7 @@ export const horoscopeApi = {
         timezone_offset_hours: timezoneOffset
       };
 
-      const response = await fetch(`${API_BASE_URL}/moon_phase`, {
+      const response = await fetch(`${process.env.REACT_APP_API_PHASE}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
