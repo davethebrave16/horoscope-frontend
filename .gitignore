@@ -128,3 +128,8 @@ $RECYCLE.BIN/
 .env.production.local
 secrets.json
 config/secrets.js
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
