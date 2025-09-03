@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { horoscopeApi } from './services/horoscopeApi';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,9 @@ function App() {
     moonPhase: null
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -23,16 +27,43 @@ function App() {
     }));
   };
 
-  const calculatePosition = () => {
+  const calculatePosition = async () => {
     if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
       alert('Please fill in all fields');
       return;
     }
-    
-    setResults(prev => ({
-      ...prev,
-      position: `Position calculated for ${formData.date} at ${formData.time} at coordinates ${formData.latitude}°N, ${formData.longitude}°E`
-    }));
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Parse date and time
+      const dateObj = new Date(formData.date);
+      const [hours, minutes] = formData.time.split(':');
+      
+      const timeData = {
+        hours: parseInt(hours),
+        minutes: parseInt(minutes),
+        seconds: 0
+      };
+
+      const data = await horoscopeApi.calculateHoroscope(
+        dateObj,
+        timeData,
+        formData.latitude,
+        formData.longitude,
+        1.0 // Default timezone offset
+      );
+
+      setResults(prev => ({
+        ...prev,
+        position: data
+      }));
+    } catch (err) {
+      setError(`Error calculating position: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const calculateAspects = () => {
@@ -129,8 +160,8 @@ function App() {
         <div className="buttons-section">
           <h2>Calculations</h2>
           <div className="button-group">
-            <button onClick={calculatePosition} className="calc-button">
-              Calculate Position
+            <button onClick={calculatePosition} className="calc-button" disabled={loading}>
+              {loading ? 'Calculating...' : 'Calculate Position'}
             </button>
             <button onClick={calculateAspects} className="calc-button">
               Calculate Aspects
@@ -143,11 +174,46 @@ function App() {
 
         <div className="results-section">
           <h2>Results</h2>
+          {error && (
+            <div className="error-message">
+              <h3>Error:</h3>
+              <p>{error}</p>
+            </div>
+          )}
           <div className="results">
-            {results.position && (
+            {results.position && results.position.success && (
               <div className="result-item">
-                <h3>Position:</h3>
-                <p>{results.position}</p>
+                <h3>Horoscope Data:</h3>
+                <div className="horoscope-data">
+                  <div className="birth-info">
+                    <h4>Birth Information:</h4>
+                    <p><strong>Date:</strong> {results.position.birth_data.date.day}/{results.position.birth_data.date.month}/{results.position.birth_data.date.year}</p>
+                    <p><strong>Time:</strong> {results.position.birth_data.time.hour}:{results.position.birth_data.time.minute.toString().padStart(2, '0')}:{results.position.birth_data.time.second.toString().padStart(2, '0')}</p>
+                    <p><strong>Location:</strong> {results.position.birth_data.location.latitude}°N, {results.position.birth_data.location.longitude}°E</p>
+                  </div>
+                  
+                  <div className="planets-section">
+                    <h4>Planets:</h4>
+                    <div className="planets-grid">
+                      {Object.entries(results.position.horoscope.planets).map(([planet, data]) => (
+                        <div key={planet} className="planet-item">
+                          <strong>{planet}:</strong> {data.sign} ({data.degree_in_sign.toFixed(2)}°)
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="houses-section">
+                    <h4>Houses:</h4>
+                    <div className="houses-grid">
+                      {Object.entries(results.position.horoscope.houses).map(([house, data]) => (
+                        <div key={house} className="house-item">
+                          <strong>{house}:</strong> {data.sign} ({data.degree_in_sign.toFixed(2)}°)
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {results.aspects && (
@@ -162,7 +228,7 @@ function App() {
                 <p>{results.moonPhase}</p>
               </div>
             )}
-            {!results.position && !results.aspects && !results.moonPhase && (
+            {!results.position && !results.aspects && !results.moonPhase && !error && (
               <p className="no-results">No calculations performed yet.</p>
             )}
           </div>

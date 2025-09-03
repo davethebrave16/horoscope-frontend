@@ -102,6 +102,17 @@ h2 {
   transform: translateY(0);
 }
 
+.calc-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.calc-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .results-section {
   margin-top: 40px;
 }
@@ -139,6 +150,80 @@ h2 {
   padding: 20px;
 }
 
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.error-message h3 {
+  color: #c33;
+  margin-bottom: 8px;
+}
+
+.error-message p {
+  color: #a33;
+  margin: 0;
+}
+
+.horoscope-data {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.birth-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+}
+
+.birth-info h4 {
+  color: #28a745;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.birth-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.planets-section, .houses-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.planets-section h4, .houses-section h4 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.planets-grid, .houses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.planet-item, .house-item {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+  font-size: 0.9rem;
+}
+
+.planet-item strong, .house-item strong {
+  color: #333;
+  display: inline-block;
+  min-width: 80px;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 20px;
@@ -155,5 +240,13 @@ h2 {
   
   .button-group {
     grid-template-columns: 1fr;
+  }
+  
+  .planets-grid, .houses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .horoscope-data {
+    gap: 20px;
   }
 }
