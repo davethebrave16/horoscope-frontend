@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:5001/horoscope-25aa9/us-central1';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const horoscopeApi = {
   calculateHoroscope: async (date, time, latitude, longitude, timezoneOffset = 1.0) => {
@@ -15,6 +15,7 @@ export const horoscopeApi = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_API_KEY}`
         },
         body: JSON.stringify(requestData)
       });
@@ -50,6 +51,7 @@ export const horoscopeApi = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_API_KEY}`
         },
         body: JSON.stringify(requestData)
       });
@@ -85,6 +87,7 @@ export const horoscopeApi = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_API_KEY}`
         },
         body: JSON.stringify(requestData)
       });
