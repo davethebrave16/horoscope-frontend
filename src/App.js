@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import './App.css';
 import { horoscopeApi } from './services/horoscopeApi';
+import { geocodingApi } from './services/geocodingApi';
 
 function App() {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    city: ''
   });
+
+  const [inputMode, setInputMode] = useState('city'); // 'city' or 'coordinates'
+  const [cityLoading, setCityLoading] = useState(false);
 
   const [results, setResults] = useState({
     position: null,
@@ -40,6 +45,39 @@ function App() {
     setShowModal(false);
     setModalContent(null);
     setModalTitle('');
+  };
+
+  const searchCity = async () => {
+    if (!formData.city.trim()) {
+      alert('Please enter a city name');
+      return;
+    }
+
+    setCityLoading(true);
+    setError(null);
+
+    try {
+      const result = await geocodingApi.searchCity(formData.city);
+      setFormData(prev => ({
+        ...prev,
+        latitude: result.latitude.toString(),
+        longitude: result.longitude.toString()
+      }));
+      alert(`Found: ${result.city}, ${result.country}\nCoordinates: ${result.latitude.toFixed(4)}°N, ${result.longitude.toFixed(4)}°E`);
+    } catch (err) {
+      setError(`Error finding city: ${err.message}`);
+    } finally {
+      setCityLoading(false);
+    }
+  };
+
+  const switchInputMode = (mode) => {
+    setInputMode(mode);
+    if (mode === 'coordinates') {
+      setFormData(prev => ({ ...prev, city: '' }));
+    } else {
+      setFormData(prev => ({ ...prev, latitude: '', longitude: '' }));
+    }
   };
 
   const renderModalContent = () => {
@@ -157,8 +195,18 @@ function App() {
   };
 
   const calculatePosition = async () => {
-    if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
-      alert('Please fill in all fields');
+    if (!formData.date || !formData.time) {
+      alert('Please fill in date and time');
+      return;
+    }
+
+    if (inputMode === 'city' && !formData.city.trim()) {
+      alert('Please enter a city name or switch to coordinates mode');
+      return;
+    }
+
+    if (inputMode === 'coordinates' && (!formData.latitude || !formData.longitude)) {
+      alert('Please enter coordinates or switch to city mode');
       return;
     }
 
@@ -166,6 +214,21 @@ function App() {
     setError(null);
 
     try {
+      let latitude = formData.latitude;
+      let longitude = formData.longitude;
+
+      // If in city mode and coordinates are not set, search for city
+      if (inputMode === 'city' && (!latitude || !longitude)) {
+        const cityResult = await geocodingApi.searchCity(formData.city);
+        latitude = cityResult.latitude.toString();
+        longitude = cityResult.longitude.toString();
+        setFormData(prev => ({
+          ...prev,
+          latitude: latitude,
+          longitude: longitude
+        }));
+      }
+
       // Parse date and time
       const dateObj = new Date(formData.date);
       const [hours, minutes] = formData.time.split(':');
@@ -179,8 +242,8 @@ function App() {
       const data = await horoscopeApi.calculateHoroscope(
         dateObj,
         timeData,
-        formData.latitude,
-        formData.longitude,
+        latitude,
+        longitude,
         1.0 // Default timezone offset
       );
 
@@ -193,8 +256,18 @@ function App() {
   };
 
   const calculateAspects = async () => {
-    if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
-      alert('Please fill in all fields');
+    if (!formData.date || !formData.time) {
+      alert('Please fill in date and time');
+      return;
+    }
+
+    if (inputMode === 'city' && !formData.city.trim()) {
+      alert('Please enter a city name or switch to coordinates mode');
+      return;
+    }
+
+    if (inputMode === 'coordinates' && (!formData.latitude || !formData.longitude)) {
+      alert('Please enter coordinates or switch to city mode');
       return;
     }
 
@@ -202,6 +275,21 @@ function App() {
     setError(null);
 
     try {
+      let latitude = formData.latitude;
+      let longitude = formData.longitude;
+
+      // If in city mode and coordinates are not set, search for city
+      if (inputMode === 'city' && (!latitude || !longitude)) {
+        const cityResult = await geocodingApi.searchCity(formData.city);
+        latitude = cityResult.latitude.toString();
+        longitude = cityResult.longitude.toString();
+        setFormData(prev => ({
+          ...prev,
+          latitude: latitude,
+          longitude: longitude
+        }));
+      }
+
       // Parse date and time
       const dateObj = new Date(formData.date);
       const [hours, minutes] = formData.time.split(':');
@@ -215,8 +303,8 @@ function App() {
       const data = await horoscopeApi.calculateAspects(
         dateObj,
         timeData,
-        formData.latitude,
-        formData.longitude,
+        latitude,
+        longitude,
         1.0 // Default timezone offset
       );
 
@@ -229,8 +317,18 @@ function App() {
   };
 
   const calculateMoonPhase = async () => {
-    if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
-      alert('Please fill in all fields');
+    if (!formData.date || !formData.time) {
+      alert('Please fill in date and time');
+      return;
+    }
+
+    if (inputMode === 'city' && !formData.city.trim()) {
+      alert('Please enter a city name or switch to coordinates mode');
+      return;
+    }
+
+    if (inputMode === 'coordinates' && (!formData.latitude || !formData.longitude)) {
+      alert('Please enter coordinates or switch to city mode');
       return;
     }
 
@@ -238,6 +336,21 @@ function App() {
     setError(null);
 
     try {
+      let latitude = formData.latitude;
+      let longitude = formData.longitude;
+
+      // If in city mode and coordinates are not set, search for city
+      if (inputMode === 'city' && (!latitude || !longitude)) {
+        const cityResult = await geocodingApi.searchCity(formData.city);
+        latitude = cityResult.latitude.toString();
+        longitude = cityResult.longitude.toString();
+        setFormData(prev => ({
+          ...prev,
+          latitude: latitude,
+          longitude: longitude
+        }));
+      }
+
       // Parse date and time
       const dateObj = new Date(formData.date);
       const [hours, minutes] = formData.time.split(':');
@@ -251,8 +364,8 @@ function App() {
       const data = await horoscopeApi.calculateMoonPhase(
         dateObj,
         timeData,
-        formData.latitude,
-        formData.longitude,
+        latitude,
+        longitude,
         1.0 // Default timezone offset
       );
 
@@ -296,38 +409,89 @@ function App() {
             />
           </div>
 
-          <div className="coordinates-group">
-            <div className="form-group">
-              <label htmlFor="latitude">Latitude:</label>
-              <input
-                type="number"
-                id="latitude"
-                name="latitude"
-                value={formData.latitude}
-                onChange={handleInputChange}
-                placeholder="e.g., 40.7128"
-                step="0.0001"
-                min="-90"
-                max="90"
-                required
-              />
+          <div className="location-section">
+            <div className="input-mode-selector">
+              <button
+                type="button"
+                className={`mode-button ${inputMode === 'city' ? 'active' : ''}`}
+                onClick={() => switchInputMode('city')}
+              >
+                City Name
+              </button>
+              <button
+                type="button"
+                className={`mode-button ${inputMode === 'coordinates' ? 'active' : ''}`}
+                onClick={() => switchInputMode('coordinates')}
+              >
+                Coordinates
+              </button>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="longitude">Longitude:</label>
-              <input
-                type="number"
-                id="longitude"
-                name="longitude"
-                value={formData.longitude}
-                onChange={handleInputChange}
-                placeholder="e.g., -74.0060"
-                step="0.0001"
-                min="-180"
-                max="180"
-                required
-              />
-            </div>
+            {inputMode === 'city' ? (
+              <div className="city-input-group">
+                <div className="form-group">
+                  <label htmlFor="city">City Name:</label>
+                  <div className="city-input-container">
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      placeholder="e.g., New York, London, Tokyo"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="search-button"
+                      onClick={searchCity}
+                      disabled={cityLoading}
+                    >
+                      {cityLoading ? 'Searching...' : 'Search'}
+                    </button>
+                  </div>
+                </div>
+                {(formData.latitude && formData.longitude) && (
+                  <div className="coordinates-display">
+                    <p><strong>Found coordinates:</strong> {formData.latitude}°N, {formData.longitude}°E</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="coordinates-group">
+                <div className="form-group">
+                  <label htmlFor="latitude">Latitude:</label>
+                  <input
+                    type="number"
+                    id="latitude"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleInputChange}
+                    placeholder="e.g., 40.7128"
+                    step="0.0001"
+                    min="-90"
+                    max="90"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="longitude">Longitude:</label>
+                  <input
+                    type="number"
+                    id="longitude"
+                    name="longitude"
+                    value={formData.longitude}
+                    onChange={handleInputChange}
+                    placeholder="e.g., -74.0060"
+                    step="0.0001"
+                    min="-180"
+                    max="180"
+                    required
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
