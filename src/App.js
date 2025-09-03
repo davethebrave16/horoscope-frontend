@@ -80,6 +80,18 @@ function App() {
     }
   };
 
+  const fillCurrentDateTime = () => {
+    const now = new Date();
+    const dateString = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+    const timeString = now.toTimeString().split(' ')[0].substring(0, 5); // HH:MM format
+    
+    setFormData(prev => ({
+      ...prev,
+      date: dateString,
+      time: timeString
+    }));
+  };
+
   const renderModalContent = () => {
     if (!modalContent) return null;
 
@@ -407,6 +419,16 @@ function App() {
               onChange={handleInputChange}
               required
             />
+          </div>
+
+          <div className="now-button-container">
+            <button
+              type="button"
+              className="now-button"
+              onClick={fillCurrentDateTime}
+            >
+              📅 Now
+            </button>
           </div>
 
           <div className="location-section">
