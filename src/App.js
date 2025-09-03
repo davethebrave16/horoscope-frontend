@@ -66,16 +66,43 @@ function App() {
     }
   };
 
-  const calculateAspects = () => {
+  const calculateAspects = async () => {
     if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
       alert('Please fill in all fields');
       return;
     }
-    
-    setResults(prev => ({
-      ...prev,
-      aspects: `Aspects calculated for ${formData.date} at ${formData.time} at coordinates ${formData.latitude}°N, ${formData.longitude}°E`
-    }));
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Parse date and time
+      const dateObj = new Date(formData.date);
+      const [hours, minutes] = formData.time.split(':');
+      
+      const timeData = {
+        hours: parseInt(hours),
+        minutes: parseInt(minutes),
+        seconds: 0
+      };
+
+      const data = await horoscopeApi.calculateAspects(
+        dateObj,
+        timeData,
+        formData.latitude,
+        formData.longitude,
+        1.0 // Default timezone offset
+      );
+
+      setResults(prev => ({
+        ...prev,
+        aspects: data
+      }));
+    } catch (err) {
+      setError(`Error calculating aspects: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const calculateMoonPhase = () => {
@@ -163,8 +190,8 @@ function App() {
             <button onClick={calculatePosition} className="calc-button" disabled={loading}>
               {loading ? 'Calculating...' : 'Calculate Position'}
             </button>
-            <button onClick={calculateAspects} className="calc-button">
-              Calculate Aspects
+            <button onClick={calculateAspects} className="calc-button" disabled={loading}>
+              {loading ? 'Calculating...' : 'Calculate Aspects'}
             </button>
             <button onClick={calculateMoonPhase} className="calc-button">
               Calculate Moon Phase
@@ -216,10 +243,36 @@ function App() {
                 </div>
               </div>
             )}
-            {results.aspects && (
+            {results.aspects && results.aspects.success && (
               <div className="result-item">
-                <h3>Aspects:</h3>
-                <p>{results.aspects}</p>
+                <h3>Aspects Data:</h3>
+                <div className="aspects-data">
+                  <div className="aspects-summary">
+                    <h4>Summary:</h4>
+                    <p><strong>Total Aspects:</strong> {results.aspects.aspect_count}</p>
+                    <p><strong>Orb Used:</strong> {results.aspects.orb_used}°</p>
+                  </div>
+                  
+                  <div className="aspects-list">
+                    <h4>Aspects:</h4>
+                    <div className="aspects-grid">
+                      {results.aspects.aspects.map((aspect, index) => (
+                        <div key={index} className="aspect-item">
+                          <div className="aspect-planets">
+                            <strong>{aspect.planet1}</strong> - <strong>{aspect.planet2}</strong>
+                          </div>
+                          <div className="aspect-details">
+                            <span className={`aspect-type aspect-${aspect.aspect.toLowerCase()}`}>
+                              {aspect.aspect}
+                            </span>
+                            <span className="aspect-degrees">{aspect.degrees.toFixed(2)}°</span>
+                            <span className="aspect-orb">±{aspect.orb.toFixed(2)}°</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {results.moonPhase && (
