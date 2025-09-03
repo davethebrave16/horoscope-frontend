@@ -69,5 +69,40 @@ export const horoscopeApi = {
       console.error('Aspects API Error:', error);
       throw error;
     }
+  },
+
+  calculateMoonPhase: async (date, time, latitude, longitude, timezoneOffset = 1.0) => {
+    try {
+      const requestData = {
+        date: [date.getFullYear(), date.getMonth() + 1, date.getDate()],
+        time: [time.hours, time.minutes, time.seconds],
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        timezone_offset_hours: timezoneOffset
+      };
+
+      const response = await fetch(`${API_BASE_URL}/moon_phase`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error('API returned unsuccessful response');
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Moon Phase API Error:', error);
+      throw error;
+    }
   }
 };

@@ -336,6 +336,70 @@ h2 {
   border-radius: 3px;
 }
 
+.moon-phase-data {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.moon-phase-description {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #6f42c1;
+}
+
+.moon-phase-description h4 {
+  color: #6f42c1;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.phase-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  padding: 10px;
+  background: white;
+  border-radius: 6px;
+  border-left: 3px solid #6f42c1;
+}
+
+.moon-position, .reference-points {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.moon-position h4, .reference-points h4 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.moon-details, .reference-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.moon-sign, .moon-decan, .moon-degree, .moon-longitude,
+.ascendant-ref, .descendant-ref {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+  font-size: 0.9rem;
+}
+
+.moon-sign strong, .moon-decan strong, .moon-degree strong, .moon-longitude strong,
+.ascendant-ref strong, .descendant-ref strong {
+  color: #333;
+  display: inline-block;
+  min-width: 120px;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 20px;
@@ -362,7 +426,7 @@ h2 {
     grid-template-columns: 1fr;
   }
   
-  .horoscope-data, .aspects-data {
+  .horoscope-data, .aspects-data, .moon-phase-data {
     gap: 20px;
   }
   
@@ -370,5 +434,9 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
+  }
+  
+  .moon-details, .reference-details {
+    grid-template-columns: 1fr;
   }
 }

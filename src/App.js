@@ -105,16 +105,43 @@ function App() {
     }
   };
 
-  const calculateMoonPhase = () => {
+  const calculateMoonPhase = async () => {
     if (!formData.date || !formData.time || !formData.latitude || !formData.longitude) {
       alert('Please fill in all fields');
       return;
     }
-    
-    setResults(prev => ({
-      ...prev,
-      moonPhase: `Moon phase calculated for ${formData.date} at ${formData.time} at coordinates ${formData.latitude}°N, ${formData.longitude}°E`
-    }));
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Parse date and time
+      const dateObj = new Date(formData.date);
+      const [hours, minutes] = formData.time.split(':');
+      
+      const timeData = {
+        hours: parseInt(hours),
+        minutes: parseInt(minutes),
+        seconds: 0
+      };
+
+      const data = await horoscopeApi.calculateMoonPhase(
+        dateObj,
+        timeData,
+        formData.latitude,
+        formData.longitude,
+        1.0 // Default timezone offset
+      );
+
+      setResults(prev => ({
+        ...prev,
+        moonPhase: data
+      }));
+    } catch (err) {
+      setError(`Error calculating moon phase: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -193,8 +220,8 @@ function App() {
             <button onClick={calculateAspects} className="calc-button" disabled={loading}>
               {loading ? 'Calculating...' : 'Calculate Aspects'}
             </button>
-            <button onClick={calculateMoonPhase} className="calc-button">
-              Calculate Moon Phase
+            <button onClick={calculateMoonPhase} className="calc-button" disabled={loading}>
+              {loading ? 'Calculating...' : 'Calculate Moon Phase'}
             </button>
           </div>
         </div>
@@ -275,10 +302,45 @@ function App() {
                 </div>
               </div>
             )}
-            {results.moonPhase && (
+            {results.moonPhase && results.moonPhase.success && (
               <div className="result-item">
-                <h3>Moon Phase:</h3>
-                <p>{results.moonPhase}</p>
+                <h3>Moon Phase Data:</h3>
+                <div className="moon-phase-data">
+                  <div className="moon-phase-description">
+                    <h4>Phase Description:</h4>
+                    <p className="phase-text">{results.moonPhase.moon_phase}</p>
+                  </div>
+                  
+                  <div className="moon-position">
+                    <h4>Moon Position:</h4>
+                    <div className="moon-details">
+                      <div className="moon-sign">
+                        <strong>Sign:</strong> {results.moonPhase.moon_position.sign}
+                      </div>
+                      <div className="moon-decan">
+                        <strong>Decan:</strong> {results.moonPhase.moon_position.decan}
+                      </div>
+                      <div className="moon-degree">
+                        <strong>Degree in Sign:</strong> {results.moonPhase.moon_position.degree_in_sign.toFixed(2)}°
+                      </div>
+                      <div className="moon-longitude">
+                        <strong>Absolute Longitude:</strong> {results.moonPhase.moon_position.absolute_longitude.toFixed(2)}°
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="reference-points">
+                    <h4>Reference Points:</h4>
+                    <div className="reference-details">
+                      <div className="ascendant-ref">
+                        <strong>Ascendant Longitude:</strong> {results.moonPhase.reference_points.ascendant_longitude.toFixed(2)}°
+                      </div>
+                      <div className="descendant-ref">
+                        <strong>Descendant Longitude:</strong> {results.moonPhase.reference_points.descendant_longitude.toFixed(2)}°
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             {!results.position && !results.aspects && !results.moonPhase && !error && (
