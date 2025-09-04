@@ -1,0 +1,160 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Project Rules for React & Firebase
+
+This comprehensive guide outlines best practices, conventions, and standards for development with modern web technologies including ReactJS, TypeScript, and Firebase for hosting and backend services.
+
+## Development Philosophy
+
+-   **Clean Code**: Write clean, maintainable, and scalable code.
+-   **SOLID**: Follow SOLID principles.
+-   **Functional & Declarative**: Prefer functional and declarative programming patterns over imperative.
+-   **Type Safety**: Emphasize type safety and static analysis with TypeScript.
+-   **Component-Driven**: Practice component-driven development.
+
+---
+
+## Code Implementation Guidelines
+
+### Planning Phase
+
+-   Begin with step-by-step planning.
+-   Write detailed pseudocode before implementation.
+-   Document component architecture and data flow.
+-   Consider edge cases and error scenarios.
+
+### Code Style
+
+-   Use **tabs** for indentation.
+-   Use **single quotes** for strings (except to avoid escaping).
+-   Omit **semicolons** (unless required for disambiguation).
+-   Eliminate unused variables.
+-   Use strict equality (`===`) instead of loose equality (`==`).
+-   Keep line length to a maximum of **80 characters**.
+-   Use trailing commas in multiline object/array literals.
+
+---
+
+## Naming Conventions
+
+### General Rules
+
+-   Use **PascalCase** for:
+    -   Components (`UserProfile`)
+    -   Type definitions and Interfaces (`type UserProfile = { ... }`)
+-   Use **kebab-case** for:
+    -   Directory names (`components/auth-wizard`)
+    -   File names (`user-profile.tsx`)
+-   Use **camelCase** for:
+    -   Variables, Functions, Methods, Hooks (`const userName`, `useAuth`)
+-   Use **UPPERCASE** for:
+    -   Environment variables (`REACT_APP_API_KEY`)
+    -   Constants (`const MAX_RETRIES = 3`)
+
+### Specific Naming Patterns
+
+-   Prefix event handlers with `handle`: `handleClick`, `handleSubmit`.
+-   Prefix boolean variables with verbs: `isLoading`, `hasError`, `canSubmit`.
+-   Prefix custom hooks with `use`: `useAuth`, `useForm`, `useFirestoreQuery`.
+-   **Firestore Collections**: Use plural nouns in `camelCase` (e.g., `users`, `userProfiles`, `blogPosts`).
+-   **Firestore Documents**: Use descriptive IDs (e.g., `user-${uid}`, `post-${timestamp}`).
+
+---
+
+## Project Structure & Firebase
+
+-   **Feature-Based Organization**: Organize files by feature or domain (e.g., `/features/auth`, `/features/posts`).
+-   **Firebase Logic**: Centralize Firebase interactions within custom hooks (e.g., `useFirestore`) or dedicated service files (`/services/firebase.ts`).
+-   **Environment Variables**: Use `.env` files (`.env.development`, `.env.production`) for managing Firebase configurations across different environments.
+-   **Firebase Config**: Maintain a central Firebase initialization file (`firebase/config.ts`).
+-   **CI/CD**: Implement a CI/CD pipeline (e.g., using GitHub Actions) for automated builds and deployments to Firebase Hosting.
+
+---
+
+## React Best Practices
+
+### Component Architecture
+
+-   Use **functional components** with TypeScript interfaces for props.
+-   Extract reusable logic into **custom hooks** (`use...`).
+-   Implement proper component composition.
+-   Use `React.memo()` strategically for performance optimization.
+-   Implement proper cleanup in `useEffect` hooks to prevent memory leaks.
+
+### Performance Optimization
+
+-   Use `useCallback` for memoizing callback functions.
+-   Use `useMemo` for expensive computations.
+-   Implement code splitting using dynamic imports (`React.lazy`).
+-   Use proper `key` props in lists (avoid using array index as a key).
+
+---
+
+## Firebase Integration & Best Practices
+
+### Core SDK Usage
+
+-   Use the official Firebase JavaScript SDK (`firebase/app`, `firebase/firestore`, etc.).
+-   Create dedicated custom hooks or services for each Firebase service (e.g., `useAuth`, `firestoreService`). This centralizes logic and error handling.
+-   Initialize Firebase once at the application's entry point.
+
+### Firestore (Database)
+
+-   **Security Rules**: **ALWAYS** implement and test robust Firestore Security Rules to protect your data. Never trust the client.
+-   **Queries**: Structure queries for optimal performance, leveraging indexes.
+-   **Real-time Updates**: Implement real-time UI updates using `onSnapshot` for a dynamic user experience.
+-   **Data Consistency**: Use transactions for operations that require data consistency.
+-   **Batch Operations**: Use batched writes for performing multiple mutations atomically.
+-   **Offline Persistence**: Enable Firestore's offline persistence to provide a seamless experience when the user's connection is unstable.
+
+### Firebase Authentication
+
+-   Implement user management using Firebase Auth.
+-   Handle authentication state changes globally to manage user sessions throughout the app.
+-   Use security rules to protect data based on user `uid`.
+
+### Cloud Functions & Storage
+
+-   Use **Cloud Functions** for server-side logic (e.g., complex data transformations, third-party integrations, scheduled tasks).
+-   Use **Cloud Storage** for user-generated content like images or other files, secured with Storage Security Rules.
+
+---
+
+## State Management
+
+### Local State
+
+-   Use `useState` for simple, component-level state.
+-   Use `useReducer` for more complex state logic within a component.
+
+### Global State
+
+-   For state shared across many components, consider libraries like **Zustand**, **Jotai**, or **Redux Toolkit**.
+-   Use **React Context** for simpler global state that doesn't change frequently (e.g., theme, user authentication status).
+
+---
+
+## Error Handling
+
+-   **Firebase Errors**: Implement centralized error handling for Firebase operations within your services or hooks. Provide clear feedback to the user.
+-   **Error Boundaries**: Use React Error Boundaries to catch rendering errors in component trees and display a fallback UI.
+-   **Form Validation**: Use a library like **Zod** for schema-based validation combined with **React Hook Form**.
+
+---
+
+## Testing
+
+-   **Unit Testing**: Use **Jest** and **React Testing Library** for unit and component testing. Follow the Arrange-Act-Assert pattern.
+-   **Firebase Emulator Suite**: Use the local Firebase Emulator Suite for all development and testing. This allows you to test security rules, functions, and database interactions in a safe, local environment without incurring costs.
+-   **Mocking**: Mock Firebase SDK calls in unit tests to isolate components from external services.
+-   **Security Rules Testing**: Write dedicated tests for your Firestore Security Rules using the Emulator Suite testing library.
+
+---
+
+## Documentation
+
+-   Use **JSDoc** to document all public functions, custom hooks, and complex components.
+-   Keep documentation clear, concise, and provide examples where appropriate.
