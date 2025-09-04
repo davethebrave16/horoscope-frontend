@@ -1,0 +1,45 @@
+name: Deploy React App to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main   # change if you deploy from another branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # or the version your React app uses
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Create .env file from GitHub Secrets
+      - name: Create .env file
+        run: |
+          echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}" >> .env
+          echo "REACT_APP_API_ASPECTS=${{ vars.REACT_APP_API_ASPECTS }}" >> .env
+          echo "REACT_APP_API_PHASE=${{ vars.REACT_APP_API_PHASE }}" >> .env
+          echo "REACT_APP_API_POSITION=${{ vars.REACT_APP_API_POSITION }}" >> .env
+
+      # 5. Build React app
+      - name: Build React app
+        run: npm run build
+
+      # 6. Install Firebase CLI
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      # 7. Deploy to Firebase Hosting
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
