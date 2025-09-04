@@ -3,7 +3,7 @@ name: Deploy React App to Firebase Hosting
 on:
   push:
     branches:
-      - main   # change if you deploy from another branch
+      - master   # change if you deploy from another branch
 
 jobs:
   build-and-deploy:
