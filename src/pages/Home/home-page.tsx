@@ -76,23 +76,34 @@ export const HomePage: React.FC = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-50">
-			<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-				<div className="rounded-lg bg-white p-6 shadow-sm">
-					<HoroscopeForm
-						formData={formData}
-						inputMode={inputMode}
-						loading={loading}
-						onInputChange={handleInputChange}
-						onSwitchInputMode={switchInputMode}
-						onFillCurrentDateTime={fillCurrentDateTime}
-						onSearchCity={handleSearchCity}
-						onCalculatePosition={() => handleCalculate('position')}
-						onCalculateAspects={() => handleCalculate('aspects')}
-						onCalculateMoonPhase={() => handleCalculate('moonPhase')}
-					/>
+		<div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+			<div className="min-h-screen flex items-center justify-center p-4">
+				<div className="w-full max-w-4xl">
+					<div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+						<div className="text-center mb-8">
+							<h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+								Horoscope Calculator
+							</h1>
+							<p className="text-gray-600 text-lg">
+								Discover your cosmic blueprint with precise astrological calculations
+							</p>
+						</div>
 
-					<ErrorMessage error={error} onDismiss={clearError} />
+						<HoroscopeForm
+							formData={formData}
+							inputMode={inputMode}
+							loading={loading}
+							onInputChange={handleInputChange}
+							onSwitchInputMode={switchInputMode}
+							onFillCurrentDateTime={fillCurrentDateTime}
+							onSearchCity={handleSearchCity}
+							onCalculatePosition={() => handleCalculate('position')}
+							onCalculateAspects={() => handleCalculate('aspects')}
+							onCalculateMoonPhase={() => handleCalculate('moonPhase')}
+						/>
+
+						<ErrorMessage error={error} onDismiss={clearError} />
+					</div>
 				</div>
 			</div>
 
