@@ -44,17 +44,6 @@ export interface AspectsResponse {
 	aspects: AspectData[]
 }
 
-export interface MoonPosition {
-	sign: string
-	decan: string
-	degree_in_sign: number
-	absolute_longitude: number
-}
-
-export interface ReferencePoints {
-	ascendant_longitude: number
-	descendant_longitude: number
-}
 
 export interface MoonPhaseData {
 	phase_name: string
