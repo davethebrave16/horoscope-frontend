@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../common/button'
-import { Input } from '../common/input'
 import { LocationInput } from '../common/location-input'
+import { YearSelector } from '../common/year-selector'
 import { TransitFormData, InputMode } from '../../types'
 import { PLANET_OPTIONS, MONTH_OPTIONS } from '../../constants'
 import { translateMonth, translatePlanet } from '../../utils/translations'
@@ -27,7 +27,6 @@ export const TransitForm: React.FC<TransitFormProps> = ({
 	onCalculateTransits
 }) => {
 	const { t } = useTranslation()
-	const currentYear = new Date().getFullYear()
 
 	return (
 		<div className="space-y-8">
@@ -39,16 +38,10 @@ export const TransitForm: React.FC<TransitFormProps> = ({
 				</div>
 				
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-					<Input
+					<YearSelector
 						label={t('transits.year')}
-						type="number"
-						name="year"
 						value={formData.year}
-						onChange={onInputChange}
-						placeholder={currentYear.toString()}
-						min="1900"
-						max="2100"
-						required
+						onChange={(year) => onInputChange({ target: { name: 'year', value: year } } as React.ChangeEvent<HTMLInputElement>)}
 					/>
 					
 					<div>

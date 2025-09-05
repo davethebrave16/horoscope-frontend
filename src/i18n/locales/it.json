@@ -203,5 +203,9 @@
 		"october": "Ottobre",
 		"november": "Novembre",
 		"december": "Dicembre"
-	}
+	},
+	"chooseYear": "Scegli un anno...",
+	"previousYear": "Anno Precedente",
+	"nextYear": "Anno Successivo",
+	"currentYear": "Anno Corrente"
 }
