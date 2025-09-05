@@ -119,3 +119,35 @@ export const translateAngle = (angle: string, t: (key: string) => string): strin
 	}
 	return angleTranslations[angle] || angle
 }
+
+// Moon phase translations based on fraction
+export const translateMoonPhase = (phaseName: string, fraction: number, t: (key: string) => string): string => {
+	// First try direct translation if the phase name exists in translations
+	const directTranslation = t(`moonPhase.phases.${phaseName}`)
+	if (directTranslation !== `moonPhase.phases.${phaseName}`) {
+		return directTranslation
+	}
+
+	// If no direct translation, determine phase based on fraction
+	let phaseKey: string
+	
+	if (fraction < 0.03 || fraction > 0.97) {
+		phaseKey = 'New Moon'
+	} else if (fraction < 0.25) {
+		phaseKey = 'Waxing Crescent'
+	} else if (fraction < 0.27) {
+		phaseKey = 'First Quarter'
+	} else if (fraction < 0.50) {
+		phaseKey = 'Waxing Gibbous'
+	} else if (fraction < 0.53) {
+		phaseKey = 'Full Moon'
+	} else if (fraction < 0.75) {
+		phaseKey = 'Waning Gibbous'
+	} else if (fraction < 0.77) {
+		phaseKey = 'Last Quarter'
+	} else {
+		phaseKey = 'Waning Crescent'
+	}
+
+	return t(`moonPhase.phases.${phaseKey}`)
+}

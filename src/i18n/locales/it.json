@@ -80,7 +80,22 @@
 		"absoluteLongitude": "Longitudine Assoluta",
 		"referencePoints": "Punti di Riferimento",
 		"ascendantLongitude": "Longitudine Ascendente",
-		"descendantLongitude": "Longitudine Discendente"
+		"descendantLongitude": "Longitudine Discendente",
+		"phaseName": "Nome Fase",
+		"ageDays": "Età (Giorni)",
+		"fractionOfCycle": "Frazione del Ciclo",
+		"illuminatedFraction": "Frazione Illuminata",
+		"julianDate": "Data Giuliana",
+		"phases": {
+			"New Moon": "Luna Nuova",
+			"Waxing Crescent": "Primo quarto crescente / Falce crescente",
+			"First Quarter": "Primo quarto (esatto)",
+			"Waxing Gibbous": "Gibbosa crescente",
+			"Full Moon": "Luna Piena",
+			"Waning Gibbous": "Gibbosa calante",
+			"Last Quarter": "Ultimo quarto (esatto)",
+			"Waning Crescent": "Falce calante / Ultimo quarto"
+		}
 	},
 	"transits": {
 		"title": "Transiti",
