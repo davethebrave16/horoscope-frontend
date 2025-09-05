@@ -6,6 +6,7 @@ A modern React application for comprehensive astrological calculations built wit
 
 - **Horoscope Calculations**: Calculate planetary positions, aspects, and moon phases
 - **Planet Transit Analysis**: Calculate monthly planet transits for any celestial body
+- **Month Moon Phases**: Calculate and display all moon phases for any given month
 - **Geocoding Integration**: Search for cities and get coordinates automatically
 - **Internationalization**: Full support for English and Italian languages with easy language switching
 - **Modern UI**: Built with Tailwind CSS and responsive design with tab-based navigation
@@ -29,15 +30,15 @@ A modern React application for comprehensive astrological calculations built wit
 ```
 src/
 ├── components/           # Reusable UI components
-│   ├── common/          # Generic components (Button, Input, Modal, LocationInput, LanguageSwitcher)
+│   ├── common/          # Generic components (Button, Input, Modal, LocationInput, LanguageSwitcher, YearMonthSelector)
 │   ├── layout/          # Layout components (Header, Footer)
-│   └── features/        # Feature-specific components (HoroscopeForm, TransitForm, etc.)
+│   └── features/        # Feature-specific components (HoroscopeForm, TransitForm, MonthMoonPhasesForm, etc.)
 ├── pages/               # Application pages/routes
 │   └── Home/           # Home page with tab-based navigation
-├── hooks/              # Custom React hooks (useForm, useHoroscope, useTransit, etc.)
+├── hooks/              # Custom React hooks (useForm, useHoroscope, useTransit, useMonthMoonPhases, etc.)
 ├── services/           # API and Firebase service layers
 │   ├── firebase/       # Firebase configuration and services
-│   └── api/            # External API calls (horoscope-api, transit-api, geocoding-api)
+│   └── api/            # External API calls (horoscope-api, transit-api, month-moon-phases-api, geocoding-api)
 ├── contexts/           # React context providers
 ├── i18n/               # Internationalization configuration and translations
 │   └── locales/        # Translation files (en.json, it.json)
@@ -76,6 +77,7 @@ src/
    REACT_APP_API_ASPECTS=https://your-api-endpoint.com/aspects
    REACT_APP_API_PHASE=https://your-api-endpoint.com/phase
    REACT_APP_API_TRANSIT=https://your-api-endpoint.com/planetary_transits
+   REACT_APP_API_MONTH_PHASE=https://your-api-endpoint.com/month_phases
 
    # Firebase Configuration (optional)
    REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
@@ -116,7 +118,7 @@ npm run type-check
 
 ## Usage
 
-The application features a tab-based interface with two main sections:
+The application features a tab-based interface with three main sections:
 
 ### 🌟 Horoscope Tab
 1. **Enter Birth Information**: Fill in the date and time of birth
@@ -132,6 +134,15 @@ The application features a tab-based interface with two main sections:
 2. **Choose Planet**: Select from Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, or Pluto
 3. **Enter Location**: Use the same location input system as horoscope calculations
 4. **Calculate Transits**: Get detailed monthly transit events showing when the planet crosses major astrological angles
+
+### 🌙 Month Moon Phases Tab
+1. **Select Month**: Choose year and month from dropdown menus
+2. **Calculate Phases**: Get all moon phases for the selected month
+3. **View Results**: See detailed information for each day including:
+   - **Phase Name**: New Moon, Waxing Crescent, First Quarter, Waxing Gibbous, Full Moon, Waning Gibbous, Last Quarter, Waning Crescent
+   - **Age in Days**: How many days since the last new moon
+   - **Illumination Percentage**: How much of the moon is illuminated
+   - **Visual Indicators**: Moon phase emojis for easy identification
 
 ### 📍 Location Input Features
 - **City Search**: Enter city name and search for coordinates automatically
@@ -183,6 +194,7 @@ The application integrates with the following API endpoints:
 - **Aspects Calculation**: `POST /aspects` - Calculate planetary aspects
 - **Moon Phase**: `POST /phase` - Calculate moon phase information
 - **Planet Transits**: `POST /planetary_transits` - Calculate monthly planet transits
+- **Month Moon Phases**: `POST /month_phases` - Calculate all moon phases for a given month
 
 ### Data Structures
 
@@ -209,10 +221,57 @@ The application integrates with the following API endpoints:
 }
 ```
 
+#### Month Moon Phases Request
+```typescript
+{
+  year: number,
+  month: number
+}
+```
+
+#### Month Moon Phases Response
+```typescript
+{
+  success: boolean,
+  month_moon_phases: MonthMoonPhaseData[],
+  request_data: {
+    year: number,
+    month: number
+  }
+}
+```
+
+#### Month Moon Phase Data
+```typescript
+{
+  date: string,
+  age_days: number,
+  illuminated_fraction: number,
+  phase_name: string
+}
+```
+
 ### Supported Planets
 - Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
 
 ## Recent Updates
+
+### v2.1.0 - Month Moon Phases Feature
+- **New Feature**: Added comprehensive month moon phases calculation and display
+- **UI Enhancement**: Added third tab for moon phases with beautiful visual indicators
+- **Component Architecture**: 
+  - Created reusable `YearMonthSelector` component for consistent month/year selection
+  - Refactored transit form to use centralized year-month selector
+  - Added dedicated moon phases form and results components
+- **Internationalization**: 
+  - Full Italian translation support for moon phases
+  - Proper date localization based on selected language
+  - Translated moon phase names in both English and Italian
+- **UX Improvements**:
+  - Visual moon phase emojis for easy identification
+  - Scrollable results with detailed phase information
+  - Age in days and illumination percentage display
+  - Responsive design with mobile-first approach
 
 ### v2.0.0 - Planet Transit Analysis
 - **New Feature**: Added comprehensive planet transit calculations
@@ -228,6 +287,7 @@ The application integrates with the following API endpoints:
   - Improved maintainability and consistency
 
 ### Key Features Added
+- **Month Moon Phases**: Calculate and display all moon phases for any given month
 - **Monthly Transit Analysis**: Calculate transits for any planet over any month
 - **Visual Transit Display**: Beautiful results showing transit events with timestamps, angles, and zodiac signs
 - **Unified Location Input**: Consistent location handling across all features
