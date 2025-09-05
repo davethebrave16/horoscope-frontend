@@ -5,6 +5,7 @@ import { ErrorBoundary } from './components/common/error-boundary'
 import { Header } from './components/layout/header'
 import { Footer } from './components/layout/footer'
 import { HomePage } from './pages/Home/home-page'
+import './i18n'
 import './App.css'
 
 function App() {

@@ -1,0 +1,142 @@
+{
+	"common": {
+		"loading": "Caricamento...",
+		"error": "Errore",
+		"success": "Successo",
+		"cancel": "Annulla",
+		"confirm": "Conferma",
+		"save": "Salva",
+		"edit": "Modifica",
+		"delete": "Elimina",
+		"close": "Chiudi",
+		"back": "Indietro",
+		"next": "Avanti",
+		"previous": "Precedente",
+		"submit": "Invia",
+		"reset": "Reimposta",
+		"search": "Cerca",
+		"clear": "Cancella",
+		"required": "Obbligatorio",
+		"optional": "Opzionale"
+	},
+	"navigation": {
+		"home": "Home",
+		"horoscope": "Oroscopo",
+		"transits": "Transiti",
+		"profile": "Profilo",
+		"settings": "Impostazioni",
+		"about": "Informazioni"
+	},
+	"forms": {
+		"birthInformation": "Informazioni di Nascita",
+		"dateOfBirth": "Data di Nascita",
+		"timeOfBirth": "Ora di Nascita",
+		"location": "Posizione",
+		"city": "Città",
+		"coordinates": "Coordinate",
+		"latitude": "Latitudine",
+		"longitude": "Longitudine",
+		"useCurrentDateTime": "Usa Data e Ora Attuali",
+		"searchCity": "Cerca Città",
+		"enterCoordinates": "Inserisci Coordinate",
+		"astrologicalCalculations": "Calcoli Astrologici",
+		"calculatePosition": "Calcola Posizione",
+		"calculateAspects": "Calcola Aspetti",
+		"calculateMoonPhase": "Calcola Fase Lunare"
+	},
+	"horoscope": {
+		"title": "Dati Oroscopo",
+		"birthData": "Informazioni di Nascita",
+		"date": "Data",
+		"time": "Ora",
+		"location": "Posizione",
+		"planetaryPositions": "Posizioni Planetarie",
+		"houses": "Case",
+		"lenormandCard": "Carta Lenormand",
+		"card": "Carta",
+		"moonSign": "Segno Lunare",
+		"moonDecan": "Decano Lunare"
+	},
+	"aspects": {
+		"title": "Dati Aspetti",
+		"summary": "Riepilogo",
+		"totalAspects": "Aspetti Totali",
+		"orbUsed": "Orbe Utilizzato",
+		"planetaryAspects": "Aspetti Planetari"
+	},
+	"moonPhase": {
+		"title": "Dati Fase Lunare",
+		"moonPhase": "Fase Lunare",
+		"moonPosition": "Posizione Lunare",
+		"sign": "Segno",
+		"decan": "Decano",
+		"degreeInSign": "Grado nel Segno",
+		"absoluteLongitude": "Longitudine Assoluta",
+		"referencePoints": "Punti di Riferimento",
+		"ascendantLongitude": "Longitudine Ascendente",
+		"descendantLongitude": "Longitudine Discendente"
+	},
+	"transits": {
+		"title": "Transiti",
+		"year": "Anno",
+		"month": "Mese",
+		"planet": "Pianeta",
+		"calculateTransits": "Calcola Transiti",
+		"transitData": "Dati Transiti",
+		"planet": "Pianeta",
+		"angle": "Angolo",
+		"datetime": "Data e Ora",
+		"longitude": "Longitudine",
+		"sign": "Segno",
+		"degreeInSign": "Grado nel Segno",
+		"decan": "Decano"
+	},
+	"planets": {
+		"Sun": "Sole",
+		"Moon": "Luna",
+		"Mercury": "Mercurio",
+		"Venus": "Venere",
+		"Mars": "Marte",
+		"Jupiter": "Giove",
+		"Saturn": "Saturno",
+		"Uranus": "Urano",
+		"Neptune": "Nettuno",
+		"Pluto": "Plutone"
+	},
+	"signs": {
+		"Aries": "Ariete",
+		"Taurus": "Toro",
+		"Gemini": "Gemelli",
+		"Cancer": "Cancro",
+		"Leo": "Leone",
+		"Virgo": "Vergine",
+		"Libra": "Bilancia",
+		"Scorpio": "Scorpione",
+		"Sagittarius": "Sagittario",
+		"Capricorn": "Capricorno",
+		"Aquarius": "Acquario",
+		"Pisces": "Pesci"
+	},
+	"aspects": {
+		"conjunction": "Congiunzione",
+		"opposition": "Opposizione",
+		"trine": "Trigono",
+		"square": "Quadrato",
+		"sextile": "Sestile",
+		"quincunx": "Quincunx"
+	},
+	"errors": {
+		"invalidDate": "Inserisci una data valida",
+		"invalidTime": "Inserisci un'ora valida",
+		"invalidCoordinates": "Inserisci coordinate valide",
+		"cityNotFound": "Città non trovata",
+		"apiError": "Si è verificato un errore durante l'elaborazione della richiesta",
+		"networkError": "Errore di rete. Controlla la tua connessione",
+		"validationError": "Compila tutti i campi obbligatori"
+	},
+	"language": {
+		"switchTo": "Passa a",
+		"english": "English",
+		"italian": "Italiano"
+	}
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { TransitResponse } from '../../types'
 
 interface TransitResultsProps {
@@ -7,6 +8,8 @@ interface TransitResultsProps {
 }
 
 export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
+	const { t } = useTranslation()
+
 	const formatDateTime = (dateTimeString: string) => {
 		const date = new Date(dateTimeString)
 		return date.toLocaleString('en-US', {
@@ -59,11 +62,11 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 			<div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-2xl p-6">
 				<h4 className="mb-4 text-xl font-bold text-orange-800 flex items-center">
 					<span className="mr-2">📊</span>
-					Transit Summary
+					{t('transits.title')} Summary
 				</h4>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">Planet</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('transits.planet')}</p>
 						<p className="text-2xl font-bold text-orange-600">{content.parameters.planet}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
@@ -83,11 +86,11 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 			<div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-6">
 				<h4 className="mb-4 text-xl font-bold text-blue-800 flex items-center">
 					<span className="mr-2">📍</span>
-					Location Information
+					{t('forms.location')} Information
 				</h4>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">Coordinates</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('forms.coordinates')}</p>
 						<p className="text-lg font-bold text-blue-600">
 							{content.parameters.location.latitude.toFixed(4)}°N, {content.parameters.location.longitude.toFixed(4)}°E
 						</p>
@@ -105,7 +108,7 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 			<div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-2xl p-6">
 				<h4 className="mb-4 text-xl font-bold text-purple-800 flex items-center">
 					<span className="mr-2">🪐</span>
-					Transit Events
+					{t('transits.title')} Events
 				</h4>
 				<div className="space-y-3 max-h-96 overflow-y-auto">
 					{content.transits.map((transit, index) => (

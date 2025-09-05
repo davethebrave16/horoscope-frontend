@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from './button'
 import { Input } from './input'
 import { InputMode } from '../../types'
@@ -24,10 +25,12 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 	onSwitchInputMode,
 	onSearchCity
 }) => {
+	const { t } = useTranslation()
+
 	return (
 		<div className="space-y-6">
 			<div className="text-center">
-				<h2 className="text-2xl font-bold text-gray-800 mb-2">Location</h2>
+				<h2 className="text-2xl font-bold text-gray-800 mb-2">{t('forms.location')}</h2>
 				<div className="w-16 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
 			</div>
 
@@ -41,7 +44,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 							: 'text-gray-600 hover:text-gray-800'
 					}`}
 				>
-					🏙️ City Name
+					🏙️ {t('forms.city')}
 				</Button>
 				<Button
 					variant={inputMode === 'coordinates' ? 'primary' : 'ghost'}
@@ -52,7 +55,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 							: 'text-gray-600 hover:text-gray-800'
 					}`}
 				>
-					📍 Coordinates
+					📍 {t('forms.coordinates')}
 				</Button>
 			</div>
 
@@ -61,7 +64,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 					<div className="flex space-x-3">
 						<div className="flex-1">
 							<Input
-								label="City Name"
+								label={t('forms.city')}
 								name="city"
 								value={city}
 								onChange={onInputChange}
@@ -76,7 +79,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 								loading={loading}
 								className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white border-0 px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
 							>
-								🔍 Search
+								🔍 {t('common.search')}
 							</Button>
 						</div>
 					</div>
@@ -94,7 +97,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 			) : (
 				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
 					<Input
-						label="Latitude"
+						label={t('forms.latitude')}
 						type="number"
 						name="latitude"
 						value={latitude}
@@ -106,7 +109,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 						required
 					/>
 					<Input
-						label="Longitude"
+						label={t('forms.longitude')}
 						type="number"
 						name="longitude"
 						value={longitude}
