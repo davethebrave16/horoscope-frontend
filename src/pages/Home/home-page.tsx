@@ -140,7 +140,7 @@ export const HomePage: React.FC = () => {
 								{t('navigation.horoscope')} Calculator
 							</h1>
 							<p className="text-gray-600 text-lg">
-								Discover your cosmic blueprint with precise astrological calculations
+								{t('subtitle')}
 							</p>
 						</div>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TransitResponse } from '../../types'
+import { translatePlanet, translateSign, translateMonth, translateAngle } from '../../utils/translations'
 
 interface TransitResultsProps {
 	content: TransitResponse
@@ -67,16 +68,16 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('transits.planet')}</p>
-						<p className="text-2xl font-bold text-orange-600">{content.parameters.planet}</p>
+						<p className="text-2xl font-bold text-orange-600">{translatePlanet(content.parameters.planet, t)}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">Total Transits</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('totalTransits')}</p>
 						<p className="text-2xl font-bold text-orange-600">{content.total_transits}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">Period</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('period')}</p>
 						<p className="text-lg font-bold text-orange-600">
-							{content.parameters.month}/{content.parameters.year}
+							{translateMonth(content.parameters.month.toString(), t)}/{content.parameters.year}
 						</p>
 					</div>
 				</div>
@@ -96,7 +97,7 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 						</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">Timezone Offset</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('timezoneOffset')}</p>
 						<p className="text-lg font-bold text-blue-600">
 							{content.parameters.location.timezone_offset_hours}h
 						</p>
@@ -117,22 +118,22 @@ export const TransitResults: React.FC<TransitResultsProps> = ({ content }) => {
 								<div className="flex items-center space-x-3">
 									<span className="text-2xl">{getAngleIcon(transit.angle)}</span>
 									<div>
-										<strong className="text-gray-900 font-bold text-lg">{transit.angle}</strong>
+										<strong className="text-gray-900 font-bold text-lg">{translateAngle(transit.angle, t)}</strong>
 										<p className="text-sm text-gray-600">{formatDateTime(transit.datetime_local)}</p>
 									</div>
 								</div>
 								<div className="text-right">
-									<p className="text-sm font-semibold text-gray-600">Degree</p>
+									<p className="text-sm font-semibold text-gray-600">{t('degree')}</p>
 									<p className="text-lg font-bold text-purple-600">{transit.degree_in_sign.toFixed(2)}°</p>
 								</div>
 							</div>
 							<div className="flex items-center justify-between">
 								<div className={`px-3 py-1 rounded-full text-sm font-bold bg-gradient-to-r ${getSignColor(transit.sign)}`}>
-									{transit.sign}
+									{translateSign(transit.sign, t)}
 								</div>
 								<div className="flex items-center space-x-4 text-sm text-gray-600">
-									<span>Decan: {transit.decan}</span>
-									<span>Longitude: {transit.longitude.toFixed(2)}°</span>
+									<span>{t('moonPhase.decan')}: {transit.decan}</span>
+									<span>{t('longitude')}: {transit.longitude.toFixed(2)}°</span>
 								</div>
 							</div>
 						</div>

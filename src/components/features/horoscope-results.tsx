@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { HoroscopeResponse, AspectsResponse, MoonPhaseResponse } from '../../types'
+import { translatePlanet, translateSign, translateCard, translateAspect, translateAngle } from '../../utils/translations'
 
 interface HoroscopeResultsProps {
 	content: HoroscopeResponse | AspectsResponse | MoonPhaseResponse
@@ -42,10 +43,10 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 					{Object.entries(data.horoscope.planets).map(([planet, data]) => (
 						<div key={planet} className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-purple-400">
 							<div className="flex justify-between items-center">
-								<strong className="text-gray-900 font-bold">{planet}</strong>
+								<strong className="text-gray-900 font-bold">{translatePlanet(planet, t)}</strong>
 								<span className="text-sm text-gray-500">{data.degree_in_sign.toFixed(2)}°</span>
 							</div>
-							<p className="text-purple-600 font-semibold mt-1">{data.sign}</p>
+							<p className="text-purple-600 font-semibold mt-1">{translateSign(data.sign, t)}</p>
 						</div>
 					))}
 				</div>
@@ -60,10 +61,10 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 					{Object.entries(data.horoscope.houses).map(([house, data]) => (
 						<div key={house} className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-blue-400">
 							<div className="flex justify-between items-center">
-								<strong className="text-gray-900 font-bold">{house}</strong>
+								<strong className="text-gray-900 font-bold">{translateAngle(house, t)}</strong>
 								<span className="text-sm text-gray-500">{data.degree_in_sign.toFixed(2)}°</span>
 							</div>
-							<p className="text-blue-600 font-semibold mt-1">{data.sign}</p>
+							<p className="text-blue-600 font-semibold mt-1">{translateSign(data.sign, t)}</p>
 						</div>
 					))}
 				</div>
@@ -78,11 +79,11 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('horoscope.card')}</p>
-						<p className="text-2xl font-bold text-amber-600">{data.lenormand_card.card}</p>
+						<p className="text-2xl font-bold text-amber-600">{translateCard(data.lenormand_card.card, t)}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('horoscope.moonSign')}</p>
-						<p className="text-lg font-bold text-amber-600">{data.lenormand_card.moon_sign}</p>
+						<p className="text-lg font-bold text-amber-600">{translateSign(data.lenormand_card.moon_sign, t)}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('horoscope.moonDecan')}</p>
@@ -122,9 +123,9 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 						<div key={index} className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-indigo-400">
 							<div className="flex items-center justify-between">
 								<div className="flex items-center space-x-3">
-									<strong className="text-gray-900 font-bold text-lg">{aspect.planet1}</strong>
+									<strong className="text-gray-900 font-bold text-lg">{translatePlanet(aspect.planet1, t)}</strong>
 									<span className="text-gray-400">-</span>
-									<strong className="text-gray-900 font-bold text-lg">{aspect.planet2}</strong>
+									<strong className="text-gray-900 font-bold text-lg">{translatePlanet(aspect.planet2, t)}</strong>
 								</div>
 								<div className="flex items-center space-x-3">
 									<span className={`rounded-full px-3 py-1 text-sm font-bold ${
@@ -134,7 +135,7 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 										aspect.aspect.toLowerCase() === 'square' ? 'bg-yellow-100 text-yellow-800' :
 										'bg-gray-100 text-gray-800'
 									}`}>
-										{aspect.aspect}
+										{translateAspect(aspect.aspect, t)}
 									</span>
 									<span className="text-sm font-semibold text-gray-600">{aspect.degrees.toFixed(2)}°</span>
 									<span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">±{aspect.orb.toFixed(2)}°</span>
@@ -167,7 +168,7 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.sign')}</p>
-						<p className="text-lg font-bold text-cyan-600">{data.moon_position.sign}</p>
+						<p className="text-lg font-bold text-cyan-600">{translateSign(data.moon_position.sign, t)}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
 						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.decan')}</p>
