@@ -103,6 +103,26 @@
 		"degreeInSign": "Grado nel Segno",
 		"decan": "Decano"
 	},
+	"moonPhases": {
+		"title": "Fasi Lunari del Mese",
+		"year": "Anno",
+		"month": "Mese",
+		"calculateMonthPhases": "Calcola Fasi del Mese",
+		"totalPhases": "Fasi Totali",
+		"age": "Età",
+		"days": "giorni",
+		"illuminated": "Illuminata",
+		"phases": {
+			"New Moon": "Luna Nuova",
+			"Waxing Crescent": "Primo quarto crescente / Falce crescente",
+			"First Quarter": "Primo quarto (esatto)",
+			"Waxing Gibbous": "Gibbosa crescente",
+			"Full Moon": "Luna Piena",
+			"Waning Gibbous": "Gibbosa calante",
+			"Last Quarter": "Ultimo quarto (esatto)",
+			"Waning Crescent": "Falce calante / Ultimo quarto"
+		}
+	},
 	"planets": {
 		"Sun": "Sole",
 		"Moon": "Luna",
@@ -214,5 +234,7 @@
 	"chooseYear": "Scegli un anno...",
 	"previousYear": "Anno Precedente",
 	"nextYear": "Anno Successivo",
-	"currentYear": "Anno Corrente"
+	"currentYear": "Anno Corrente",
+	"year": "Anno",
+	"month": "Mese"
 }

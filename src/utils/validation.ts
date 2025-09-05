@@ -62,8 +62,22 @@ export const transitFormDataSchema = z.object({
 	path: ['city']
 })
 
+export const monthMoonPhasesFormDataSchema = z.object({
+	year: z.string().min(1, 'Year is required')
+		.refine((val) => {
+			const num = parseInt(val)
+			return !isNaN(num) && num >= 1900 && num <= 2100
+		}, 'Year must be between 1900 and 2100'),
+	month: z.string().min(1, 'Month is required')
+		.refine((val) => {
+			const num = parseInt(val)
+			return !isNaN(num) && num >= 1 && num <= 12
+		}, 'Month must be between 1 and 12')
+})
+
 export type FormDataSchema = z.infer<typeof formDataSchema>
 export type CoordinatesSchema = z.infer<typeof coordinatesSchema>
 export type CitySchema = z.infer<typeof citySchema>
 export type TimeDataSchema = z.infer<typeof timeDataSchema>
 export type TransitFormDataSchema = z.infer<typeof transitFormDataSchema>
+export type MonthMoonPhasesFormDataSchema = z.infer<typeof monthMoonPhasesFormDataSchema>

@@ -160,3 +160,24 @@ export interface TransitFormData {
 }
 
 export type PlanetOption = 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars' | 'Jupiter' | 'Saturn' | 'Uranus' | 'Neptune' | 'Pluto'
+
+export interface MonthMoonPhaseData {
+	date: string
+	age_days: number
+	illuminated_fraction: number
+	phase_name: string
+}
+
+export interface MonthMoonPhasesResponse {
+	success: boolean
+	month_moon_phases: MonthMoonPhaseData[]
+	request_data: {
+		year: number
+		month: number
+	}
+}
+
+export interface MonthMoonPhasesFormData {
+	year: string
+	month: string
+}

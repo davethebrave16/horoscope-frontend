@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
 	ASPECTS: process.env.REACT_APP_API_ASPECTS || '',
 	PHASE: process.env.REACT_APP_API_PHASE || '',
 	TRANSIT: process.env.REACT_APP_API_TRANSIT || '',
+	MONTH_PHASE: process.env.REACT_APP_API_MONTH_PHASE || '',
 } as const
 
 export const GEOCODING_CONFIG = {

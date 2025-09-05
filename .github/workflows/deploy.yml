@@ -32,6 +32,7 @@ jobs:
           echo "REACT_APP_API_PHASE=${{ vars.REACT_APP_API_PHASE }}" >> .env
           echo "REACT_APP_API_POSITION=${{ vars.REACT_APP_API_POSITION }}" >> .env
           echo "REACT_APP_API_TRANSIT=${{ vars.REACT_APP_API_TRANSIT }}" >> .env
+          echo "REACT_APP_API_MONTH_PHASE=${{ vars.REACT_APP_API_MONTH_PHASE }}" >> .env
 
       # 5. Build React app
       - name: Build React app

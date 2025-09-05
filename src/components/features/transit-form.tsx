@@ -2,10 +2,10 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../common/button'
 import { LocationInput } from '../common/location-input'
-import { YearSelector } from '../common/year-selector'
+import { YearMonthSelector } from '../common/year-month-selector'
 import { TransitFormData, InputMode } from '../../types'
-import { PLANET_OPTIONS, MONTH_OPTIONS } from '../../constants'
-import { translateMonth, translatePlanet } from '../../utils/translations'
+import { PLANET_OPTIONS } from '../../constants'
+import { translatePlanet } from '../../utils/translations'
 
 interface TransitFormProps {
 	formData: TransitFormData
@@ -37,33 +37,14 @@ export const TransitForm: React.FC<TransitFormProps> = ({
 					<div className="w-16 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
 				</div>
 				
-				<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-					<YearSelector
-						label={t('transits.year')}
-						value={formData.year}
-						onChange={(year) => onInputChange({ target: { name: 'year', value: year } } as React.ChangeEvent<HTMLInputElement>)}
-					/>
-					
-					<div>
-						<label className="block text-sm font-semibold text-gray-700 mb-2">
-							{t('transits.month')}
-						</label>
-						<select
-							name="month"
-							value={formData.month}
-							onChange={onInputChange}
-							className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 bg-white"
-							required
-						>
-							<option value="">{t('chooseMonth')}</option>
-							{MONTH_OPTIONS.map((option) => (
-								<option key={option.value} value={option.value}>
-									{translateMonth(option.value, t)}
-								</option>
-							))}
-						</select>
-					</div>
-				</div>
+				<YearMonthSelector
+					year={formData.year}
+					month={formData.month}
+					onYearChange={(year) => onInputChange({ target: { name: 'year', value: year } } as React.ChangeEvent<HTMLInputElement>)}
+					onMonthChange={(month) => onInputChange({ target: { name: 'month', value: month } } as React.ChangeEvent<HTMLSelectElement>)}
+					yearLabel={t('transits.year')}
+					monthLabel={t('transits.month')}
+				/>
 			</div>
 
 			{/* Planet Selection Section */}

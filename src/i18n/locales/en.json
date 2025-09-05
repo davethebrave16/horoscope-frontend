@@ -23,6 +23,7 @@
 		"home": "Home",
 		"horoscope": "Horoscope",
 		"transits": "Transits",
+		"moonPhases": "Moon Phases",
 		"profile": "Profile",
 		"settings": "Settings",
 		"about": "About"
@@ -62,7 +63,13 @@
 		"summary": "Summary",
 		"totalAspects": "Total Aspects",
 		"orbUsed": "Orb Used",
-		"planetaryAspects": "Planetary Aspects"
+		"planetaryAspects": "Planetary Aspects",
+		"conjunction": "Conjunction",
+		"opposition": "Opposition",
+		"trine": "Trine",
+		"square": "Square",
+		"sextile": "Sextile",
+		"quincunx": "Quincunx"
 	},
 	"moonPhase": {
 		"title": "Moon Phase Data",
@@ -90,13 +97,32 @@
 		"planet": "Planet",
 		"calculateTransits": "Calculate Transits",
 		"transitData": "Transit Data",
-		"planet": "Planet",
 		"angle": "Angle",
 		"datetime": "Date & Time",
 		"longitude": "Longitude",
 		"sign": "Sign",
 		"degreeInSign": "Degree in Sign",
 		"decan": "Decan"
+	},
+	"moonPhases": {
+		"title": "Month Moon Phases",
+		"year": "Year",
+		"month": "Month",
+		"calculateMonthPhases": "Calculate Month Phases",
+		"totalPhases": "Total Phases",
+		"age": "Age",
+		"days": "days",
+		"illuminated": "Illuminated",
+		"phases": {
+			"New Moon": "New Moon",
+			"Waxing Crescent": "Waxing Crescent",
+			"First Quarter": "First Quarter",
+			"Waxing Gibbous": "Waxing Gibbous",
+			"Full Moon": "Full Moon",
+			"Waning Gibbous": "Waning Gibbous",
+			"Last Quarter": "Last Quarter",
+			"Waning Crescent": "Waning Crescent"
+		}
 	},
 	"planets": {
 		"Sun": "Sun",
@@ -123,14 +149,6 @@
 		"Capricorn": "Capricorn",
 		"Aquarius": "Aquarius",
 		"Pisces": "Pisces"
-	},
-	"aspects": {
-		"conjunction": "Conjunction",
-		"opposition": "Opposition",
-		"trine": "Trine",
-		"square": "Square",
-		"sextile": "Sextile",
-		"quincunx": "Quincunx"
 	},
 	"errors": {
 		"invalidDate": "Please enter a valid date",
@@ -217,5 +235,7 @@
 	"chooseYear": "Choose a year...",
 	"previousYear": "Previous Year",
 	"nextYear": "Next Year",
-	"currentYear": "Current Year"
+	"currentYear": "Current Year",
+	"year": "Year",
+	"month": "Month"
 }

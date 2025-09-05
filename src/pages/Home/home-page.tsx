@@ -4,19 +4,22 @@ import { useForm } from '../../hooks/use-form'
 import { useHoroscope } from '../../hooks/use-horoscope'
 import { useTransit } from '../../hooks/use-transit'
 import { useTransitForm } from '../../hooks/use-transit-form'
+import { useMonthMoonPhases } from '../../hooks/use-month-moon-phases'
 import { useModal } from '../../hooks/use-modal'
 import { HoroscopeForm } from '../../components/features/horoscope-form'
 import { HoroscopeResults } from '../../components/features/horoscope-results'
 import { TransitForm } from '../../components/features/transit-form'
 import { TransitResults } from '../../components/features/transit-results'
+import { MonthMoonPhasesForm } from '../../components/features/month-moon-phases-form'
+import { MonthMoonPhasesResults } from '../../components/features/month-moon-phases-results'
 import { Modal } from '../../components/common/modal'
 import { ErrorMessage } from '../../components/common/error-message'
-import { formDataSchema, transitFormDataSchema } from '../../utils/validation'
+import { formDataSchema, transitFormDataSchema, monthMoonPhasesFormDataSchema } from '../../utils/validation'
 import { ERROR_MESSAGES } from '../../constants'
 
 export const HomePage: React.FC = () => {
 	const { t } = useTranslation()
-	const [activeTab, setActiveTab] = useState<'horoscope' | 'transit'>('horoscope')
+	const [activeTab, setActiveTab] = useState<'horoscope' | 'transit' | 'moonPhases'>('horoscope')
 
 	const {
 		formData,
@@ -52,6 +55,18 @@ export const HomePage: React.FC = () => {
 		searchCity: searchTransitCity,
 		calculateTransits
 	} = useTransit()
+
+	const {
+		loading: moonPhasesLoading,
+		error: moonPhasesError,
+		clearError: clearMoonPhasesError,
+		calculateMonthMoonPhases
+	} = useMonthMoonPhases()
+
+	const [moonPhasesFormData, setMoonPhasesFormData] = useState({
+		year: '',
+		month: ''
+	})
 
 	const { isOpen, modalContent, openModal, closeModal } = useModal()
 
@@ -130,6 +145,30 @@ export const HomePage: React.FC = () => {
 		}
 	}
 
+	const handleMoonPhasesInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+		const { name, value } = e.target
+		setMoonPhasesFormData(prev => ({
+			...prev,
+			[name]: value
+		}))
+	}
+
+	const handleCalculateMonthMoonPhases = async () => {
+		// Validate moon phases form data
+		const validation = monthMoonPhasesFormDataSchema.safeParse(moonPhasesFormData)
+		if (!validation.success) {
+			alert(ERROR_MESSAGES.REQUIRED_FIELDS)
+			return
+		}
+
+		try {
+			const data = await calculateMonthMoonPhases(moonPhasesFormData)
+			openModal(t('moonPhases.title'), data)
+		} catch (err) {
+			// Error is handled by the hook
+		}
+	}
+
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
 			<div className="min-h-screen flex items-center justify-center p-4">
@@ -148,7 +187,7 @@ export const HomePage: React.FC = () => {
 						<div className="flex justify-center space-x-2 bg-gray-100 p-1 rounded-full mb-8">
 							<button
 								onClick={() => setActiveTab('horoscope')}
-								className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
+								className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
 									activeTab === 'horoscope' 
 										? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg' 
 										: 'text-gray-600 hover:text-gray-800'
@@ -158,13 +197,23 @@ export const HomePage: React.FC = () => {
 							</button>
 							<button
 								onClick={() => setActiveTab('transit')}
-								className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
+								className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
 									activeTab === 'transit' 
 										? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg' 
 										: 'text-gray-600 hover:text-gray-800'
 								}`}
 							>
 								🪐 {t('navigation.transits')}
+							</button>
+							<button
+								onClick={() => setActiveTab('moonPhases')}
+								className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+									activeTab === 'moonPhases' 
+										? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg' 
+										: 'text-gray-600 hover:text-gray-800'
+								}`}
+							>
+								🌙 {t('navigation.moonPhases')}
 							</button>
 						</div>
 
@@ -201,6 +250,18 @@ export const HomePage: React.FC = () => {
 								<ErrorMessage error={transitError} onDismiss={clearTransitError} />
 							</>
 						)}
+
+						{activeTab === 'moonPhases' && (
+							<>
+								<MonthMoonPhasesForm
+									formData={moonPhasesFormData}
+									loading={moonPhasesLoading}
+									onInputChange={handleMoonPhasesInputChange}
+									onCalculateMonthMoonPhases={handleCalculateMonthMoonPhases}
+								/>
+								<ErrorMessage error={moonPhasesError} onDismiss={clearMoonPhasesError} />
+							</>
+						)}
 					</div>
 				</div>
 			</div>
@@ -215,6 +276,11 @@ export const HomePage: React.FC = () => {
 						{modalContent.title === t('transits.title') ? (
 							<TransitResults
 								content={modalContent.content}
+								title={modalContent.title}
+							/>
+						) : modalContent.title === t('moonPhases.title') ? (
+							<MonthMoonPhasesResults
+								data={modalContent.content}
 								title={modalContent.title}
 							/>
 						) : (
