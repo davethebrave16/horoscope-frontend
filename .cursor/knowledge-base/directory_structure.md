@@ -1,60 +1,74 @@
 # Current Directory Structure
 
-## Project Structure
+## Core Components
 
 ```
 .
-├── firebase.json
-├── .firebaserc
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── tailwind.config.js
-├── postcss.config.js
-├── .eslintrc.js
-├── env.example
-├── README.md
-└── **src/**
-    ├── **components/**
-    │   ├── **common/**
-    │   │   ├── button.tsx
-    │   │   ├── input.tsx
-    │   │   ├── modal.tsx
-    │   │   ├── error-message.tsx
-    │   │   └── error-boundary.tsx
-    │   ├── **layout/**
-    │   │   ├── header.tsx
-    │   │   └── footer.tsx
-    │   └── **features/**
-    │       ├── horoscope-form.tsx
-    │       └── horoscope-results.tsx
-    ├── **pages/**
-    │   └── **Home/**
-    │       └── home-page.tsx
-    ├── **hooks/**
-    │   ├── use-horoscope.ts
-    │   ├── use-form.ts
-    │   └── use-modal.ts
-    ├── **services/**
-    │   ├── **firebase/**
-    │   │   └── config.ts
-    │   └── **api/**
-    │       ├── horoscope-api.ts
-    │       └── geocoding-api.ts
-    ├── **contexts/**
-    │   └── app-context.tsx
-    ├── **utils/**
-    │   ├── index.ts
-    │   └── validation.ts
-    ├── **types/**
-    │   └── index.ts
-    ├── **constants/**
-    │   └── index.ts
-    ├── **styles/**
-    │   └── (empty - using Tailwind)
-    ├── App.tsx
-    ├── App.css
-    ├── index.tsx
-    └── index.css
+- env.example
+- .eslintrc.js
+- firebase.json
+- .firebaserc
+- **.github/**
+    - **workflows/**
+        - deploy.yml
+- .gitignore
+- package.json
+- package-lock.json
+- postcss.config.js
+- **public/**
+    - index.html
+- README.md
+- **src/**
+    - App.css
+    - App.tsx
+    - **components/**
+        - **common/**
+            - button.tsx
+            - error-boundary.tsx
+            - error-message.tsx
+            - input.tsx
+            - location-input.tsx
+            - modal.tsx
+        - **features/**
+            - horoscope-form.tsx
+            - horoscope-results.tsx
+            - transit-form.tsx
+            - transit-results.tsx
+        - **layout/**
+            - footer.tsx
+            - header.tsx
+    - **constants/**
+        - index.ts
+    - **contexts/**
+        - app-context.tsx
+    - **hooks/**
+        - use-form.ts
+        - use-horoscope.ts
+        - use-modal.ts
+        - use-transit-form.ts
+        - use-transit.ts
+    - index.css
+    - index.tsx
+    - **pages/**
+        - **Auth/**
+        - **Dashboard/**
+        - **Home/**
+            - home-page.tsx
+        - **Profile/**
+    - **services/**
+        - **api/**
+            - geocoding-api.ts
+            - horoscope-api.ts
+            - transit-api.ts
+        - **firebase/**
+            - config.ts
+        - **storage/**
+    - **styles/**
+    - **types/**
+        - index.ts
+    - **utils/**
+        - index.ts
+        - validation.ts
+- tailwind.config.js
+- tsconfig.json
 ```

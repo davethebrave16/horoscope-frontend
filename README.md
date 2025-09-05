@@ -1,12 +1,13 @@
-# Horoscope Frontend
+# Astrological Calculator Frontend
 
-A modern React application for astrological calculations built with TypeScript, Firebase, and Tailwind CSS.
+A modern React application for comprehensive astrological calculations built with TypeScript, Firebase, and Tailwind CSS.
 
 ## Features
 
-- **Astrological Calculations**: Calculate horoscope positions, aspects, and moon phases
+- **Horoscope Calculations**: Calculate planetary positions, aspects, and moon phases
+- **Planet Transit Analysis**: Calculate monthly planet transits for any celestial body
 - **Geocoding Integration**: Search for cities and get coordinates automatically
-- **Modern UI**: Built with Tailwind CSS and responsive design
+- **Modern UI**: Built with Tailwind CSS and responsive design with tab-based navigation
 - **Type Safety**: Full TypeScript implementation
 - **Error Handling**: Comprehensive error boundaries and validation
 - **Firebase Ready**: Configured for Firebase integration
@@ -26,15 +27,15 @@ A modern React application for astrological calculations built with TypeScript, 
 ```
 src/
 ├── components/           # Reusable UI components
-│   ├── common/          # Generic components (Button, Input, Modal)
+│   ├── common/          # Generic components (Button, Input, Modal, LocationInput)
 │   ├── layout/          # Layout components (Header, Footer)
-│   └── features/        # Feature-specific components
+│   └── features/        # Feature-specific components (HoroscopeForm, TransitForm, etc.)
 ├── pages/               # Application pages/routes
-│   └── Home/           # Home page components
-├── hooks/              # Custom React hooks
+│   └── Home/           # Home page with tab-based navigation
+├── hooks/              # Custom React hooks (useForm, useHoroscope, useTransit, etc.)
 ├── services/           # API and Firebase service layers
 │   ├── firebase/       # Firebase configuration and services
-│   └── api/            # External API calls
+│   └── api/            # External API calls (horoscope-api, transit-api, geocoding-api)
 ├── contexts/           # React context providers
 ├── utils/              # Utility functions and helpers
 ├── types/              # TypeScript type definitions
@@ -70,6 +71,7 @@ src/
    REACT_APP_API_POSITION=https://your-api-endpoint.com/position
    REACT_APP_API_ASPECTS=https://your-api-endpoint.com/aspects
    REACT_APP_API_PHASE=https://your-api-endpoint.com/phase
+   REACT_APP_API_TRANSIT=https://your-api-endpoint.com/planetary_transits
 
    # Firebase Configuration (optional)
    REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
@@ -110,20 +112,35 @@ npm run type-check
 
 ## Usage
 
+The application features a tab-based interface with two main sections:
+
+### 🌟 Horoscope Tab
 1. **Enter Birth Information**: Fill in the date and time of birth
 2. **Choose Location Input**: Either enter a city name or coordinates directly
 3. **Search City** (if using city mode): Click search to find coordinates
 4. **Calculate**: Choose from three calculation types:
-   - Calculate Position: Get planetary positions and houses
-   - Calculate Aspects: Get planetary aspects
-   - Calculate Moon Phase: Get moon phase information
+   - **Calculate Position**: Get planetary positions and houses
+   - **Calculate Aspects**: Get planetary aspects
+   - **Calculate Moon Phase**: Get moon phase information
+
+### 🪐 Planet Transits Tab
+1. **Select Time Period**: Choose year and month from dropdown menus
+2. **Choose Planet**: Select from Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, or Pluto
+3. **Enter Location**: Use the same location input system as horoscope calculations
+4. **Calculate Transits**: Get detailed monthly transit events showing when the planet crosses major astrological angles
+
+### 📍 Location Input Features
+- **City Search**: Enter city name and search for coordinates automatically
+- **Direct Coordinates**: Input latitude and longitude directly
+- **Visual Feedback**: See found coordinates with confirmation message
+- **Validation**: Comprehensive input validation for all fields
 
 ## Architecture
 
 ### Component Structure
 
-- **Common Components**: Reusable UI components like Button, Input, Modal
-- **Feature Components**: Business logic components like HoroscopeForm, HoroscopeResults
+- **Common Components**: Reusable UI components like Button, Input, Modal, LocationInput
+- **Feature Components**: Business logic components like HoroscopeForm, HoroscopeResults, TransitForm, TransitResults
 - **Layout Components**: Page structure components like Header, Footer
 
 ### State Management
@@ -143,6 +160,66 @@ npm run type-check
 - **Tailwind CSS**: Utility-first CSS framework
 - **Responsive Design**: Mobile-first approach
 - **Component Styling**: Scoped component styles
+
+## API Integration
+
+### Endpoints
+
+The application integrates with the following API endpoints:
+
+- **Position Calculation**: `POST /position` - Calculate planetary positions and houses
+- **Aspects Calculation**: `POST /aspects` - Calculate planetary aspects
+- **Moon Phase**: `POST /phase` - Calculate moon phase information
+- **Planet Transits**: `POST /planetary_transits` - Calculate monthly planet transits
+
+### Data Structures
+
+#### Transit Request
+```typescript
+{
+  year: number,
+  month: number,
+  latitude: number,
+  longitude: number,
+  timezone_offset_hours: number,
+  planet: string,
+  step_minutes: number
+}
+```
+
+#### Transit Response
+```typescript
+{
+  success: boolean,
+  transits: TransitData[],
+  parameters: TransitParameters,
+  total_transits: number
+}
+```
+
+### Supported Planets
+- Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+
+## Recent Updates
+
+### v2.0.0 - Planet Transit Analysis
+- **New Feature**: Added comprehensive planet transit calculations
+- **UI Enhancement**: Implemented tab-based navigation for better organization
+- **Component Refactoring**: Centralized location input into reusable `LocationInput` component
+- **UX Improvements**: 
+  - Month selection with dropdown instead of number input
+  - Enhanced transit results display with color-coded zodiac signs
+  - Improved form validation and error handling
+- **Code Quality**: 
+  - Eliminated code duplication between forms
+  - Better TypeScript type definitions
+  - Improved maintainability and consistency
+
+### Key Features Added
+- **Monthly Transit Analysis**: Calculate transits for any planet over any month
+- **Visual Transit Display**: Beautiful results showing transit events with timestamps, angles, and zodiac signs
+- **Unified Location Input**: Consistent location handling across all features
+- **Enhanced Validation**: Comprehensive form validation with user-friendly error messages
 
 ## Contributing
 

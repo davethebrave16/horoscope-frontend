@@ -103,3 +103,43 @@ export interface ModalContent {
 	title: string
 	content: any
 }
+
+export interface TransitData {
+	planet: string
+	angle: string
+	datetime_local: string
+	longitude: number
+	sign: string
+	degree_in_sign: number
+	decan: number
+}
+
+export interface TransitParameters {
+	year: number
+	month: number
+	location: {
+		latitude: number
+		longitude: number
+		timezone_offset_hours: number
+	}
+	planet: string
+	step_minutes: number
+}
+
+export interface TransitResponse {
+	success: boolean
+	transits: TransitData[]
+	parameters: TransitParameters
+	total_transits: number
+}
+
+export interface TransitFormData {
+	year: string
+	month: string
+	planet: string
+	latitude: string
+	longitude: string
+	city: string
+}
+
+export type PlanetOption = 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars' | 'Jupiter' | 'Saturn' | 'Uranus' | 'Neptune' | 'Pluto'

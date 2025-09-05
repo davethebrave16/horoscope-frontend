@@ -2,6 +2,7 @@ export const API_ENDPOINTS = {
 	POSITION: process.env.REACT_APP_API_POSITION || '',
 	ASPECTS: process.env.REACT_APP_API_ASPECTS || '',
 	PHASE: process.env.REACT_APP_API_PHASE || '',
+	TRANSIT: process.env.REACT_APP_API_TRANSIT || '',
 } as const
 
 export const GEOCODING_CONFIG = {
@@ -20,6 +21,7 @@ export const MODAL_TITLES = {
 	HOROSCOPE: 'Horoscope Data',
 	ASPECTS: 'Aspects Data',
 	MOON_PHASE: 'Moon Phase Data',
+	TRANSIT: 'Planet Transit Data',
 } as const
 
 export const ERROR_MESSAGES = {
@@ -29,3 +31,31 @@ export const ERROR_MESSAGES = {
 	API_ERROR: 'An error occurred while processing your request',
 	NETWORK_ERROR: 'Network error. Please check your connection.',
 } as const
+
+export const PLANET_OPTIONS = [
+	{ value: 'Sun', label: 'Sun' },
+	{ value: 'Moon', label: 'Moon' },
+	{ value: 'Mercury', label: 'Mercury' },
+	{ value: 'Venus', label: 'Venus' },
+	{ value: 'Mars', label: 'Mars' },
+	{ value: 'Jupiter', label: 'Jupiter' },
+	{ value: 'Saturn', label: 'Saturn' },
+	{ value: 'Uranus', label: 'Uranus' },
+	{ value: 'Neptune', label: 'Neptune' },
+	{ value: 'Pluto', label: 'Pluto' },
+] as const
+
+export const MONTH_OPTIONS = [
+	{ value: '1', label: 'January' },
+	{ value: '2', label: 'February' },
+	{ value: '3', label: 'March' },
+	{ value: '4', label: 'April' },
+	{ value: '5', label: 'May' },
+	{ value: '6', label: 'June' },
+	{ value: '7', label: 'July' },
+	{ value: '8', label: 'August' },
+	{ value: '9', label: 'September' },
+	{ value: '10', label: 'October' },
+	{ value: '11', label: 'November' },
+	{ value: '12', label: 'December' },
+] as const
