@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useForm } from '../../hooks/use-form'
 import { useHoroscope } from '../../hooks/use-horoscope'
 import { useTransit } from '../../hooks/use-transit'
@@ -11,9 +12,10 @@ import { TransitResults } from '../../components/features/transit-results'
 import { Modal } from '../../components/common/modal'
 import { ErrorMessage } from '../../components/common/error-message'
 import { formDataSchema, transitFormDataSchema } from '../../utils/validation'
-import { ERROR_MESSAGES, MODAL_TITLES } from '../../constants'
+import { ERROR_MESSAGES } from '../../constants'
 
 export const HomePage: React.FC = () => {
+	const { t } = useTranslation()
 	const [activeTab, setActiveTab] = useState<'horoscope' | 'transit'>('horoscope')
 
 	const {
@@ -96,15 +98,15 @@ export const HomePage: React.FC = () => {
 			switch (calculationType) {
 				case 'position':
 					data = await calculateHoroscope(formData, inputMode)
-					openModal(MODAL_TITLES.HOROSCOPE, data)
+					openModal(t('horoscope.title'), data)
 					break
 				case 'aspects':
 					data = await calculateAspects(formData, inputMode)
-					openModal(MODAL_TITLES.ASPECTS, data)
+					openModal(t('aspects.title'), data)
 					break
 				case 'moonPhase':
 					data = await calculateMoonPhase(formData, inputMode)
-					openModal(MODAL_TITLES.MOON_PHASE, data)
+					openModal(t('moonPhase.title'), data)
 					break
 			}
 		} catch (err) {
@@ -122,7 +124,7 @@ export const HomePage: React.FC = () => {
 
 		try {
 			const data = await calculateTransits(transitFormData, transitInputMode)
-			openModal(MODAL_TITLES.TRANSIT, data)
+			openModal(t('transits.title'), data)
 		} catch (err) {
 			// Error is handled by the hook
 		}
@@ -135,10 +137,10 @@ export const HomePage: React.FC = () => {
 					<div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
 						<div className="text-center mb-8">
 							<h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-								Astrological Calculator
+								{t('navigation.horoscope')} Calculator
 							</h1>
 							<p className="text-gray-600 text-lg">
-								Discover your cosmic blueprint with precise astrological calculations
+								{t('subtitle')}
 							</p>
 						</div>
 
@@ -152,7 +154,7 @@ export const HomePage: React.FC = () => {
 										: 'text-gray-600 hover:text-gray-800'
 								}`}
 							>
-								🌟 Horoscope
+								🌟 {t('navigation.horoscope')}
 							</button>
 							<button
 								onClick={() => setActiveTab('transit')}
@@ -162,7 +164,7 @@ export const HomePage: React.FC = () => {
 										: 'text-gray-600 hover:text-gray-800'
 								}`}
 							>
-								🪐 Planet Transits
+								🪐 {t('navigation.transits')}
 							</button>
 						</div>
 
@@ -210,7 +212,7 @@ export const HomePage: React.FC = () => {
 			>
 				{modalContent && (
 					<>
-						{modalContent.title === MODAL_TITLES.TRANSIT ? (
+						{modalContent.title === t('transits.title') ? (
 							<TransitResults
 								content={modalContent.content}
 								title={modalContent.title}

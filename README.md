@@ -7,6 +7,7 @@ A modern React application for comprehensive astrological calculations built wit
 - **Horoscope Calculations**: Calculate planetary positions, aspects, and moon phases
 - **Planet Transit Analysis**: Calculate monthly planet transits for any celestial body
 - **Geocoding Integration**: Search for cities and get coordinates automatically
+- **Internationalization**: Full support for English and Italian languages with easy language switching
 - **Modern UI**: Built with Tailwind CSS and responsive design with tab-based navigation
 - **Type Safety**: Full TypeScript implementation
 - **Error Handling**: Comprehensive error boundaries and validation
@@ -17,6 +18,7 @@ A modern React application for comprehensive astrological calculations built wit
 - **React 18** with TypeScript
 - **Tailwind CSS** for styling
 - **React Router** for navigation
+- **React i18next** for internationalization
 - **Zod** for validation
 - **React Hook Form** for form management
 - **Firebase** for backend services
@@ -27,7 +29,7 @@ A modern React application for comprehensive astrological calculations built wit
 ```
 src/
 ├── components/           # Reusable UI components
-│   ├── common/          # Generic components (Button, Input, Modal, LocationInput)
+│   ├── common/          # Generic components (Button, Input, Modal, LocationInput, LanguageSwitcher)
 │   ├── layout/          # Layout components (Header, Footer)
 │   └── features/        # Feature-specific components (HoroscopeForm, TransitForm, etc.)
 ├── pages/               # Application pages/routes
@@ -37,6 +39,8 @@ src/
 │   ├── firebase/       # Firebase configuration and services
 │   └── api/            # External API calls (horoscope-api, transit-api, geocoding-api)
 ├── contexts/           # React context providers
+├── i18n/               # Internationalization configuration and translations
+│   └── locales/        # Translation files (en.json, it.json)
 ├── utils/              # Utility functions and helpers
 ├── types/              # TypeScript type definitions
 ├── constants/          # Application constants
@@ -134,6 +138,14 @@ The application features a tab-based interface with two main sections:
 - **Direct Coordinates**: Input latitude and longitude directly
 - **Visual Feedback**: See found coordinates with confirmation message
 - **Validation**: Comprehensive input validation for all fields
+
+### 🌍 Internationalization
+The application supports multiple languages with easy switching:
+- **English**: Default language with complete translations
+- **Italian**: Full Italian translation for all interface elements
+- **Language Switcher**: Toggle between languages using the EN/IT buttons in the header
+- **Persistent Selection**: Language choice is saved in localStorage
+- **Comprehensive Coverage**: All text, labels, buttons, and messages are translated
 
 ## Architecture
 
