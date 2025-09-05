@@ -65,6 +65,28 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 					))}
 				</div>
 			</div>
+
+			{/* Lenormand Card Information */}
+			<div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-6">
+				<h4 className="mb-4 text-xl font-bold text-amber-800 flex items-center">
+					<span className="mr-2">🃏</span>
+					Lenormand Card
+				</h4>
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">Card</p>
+						<p className="text-2xl font-bold text-amber-600">{data.lenormand_card.card}</p>
+					</div>
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">Moon Sign</p>
+						<p className="text-lg font-bold text-amber-600">{data.lenormand_card.moon_sign}</p>
+					</div>
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">Moon Decan</p>
+						<p className="text-2xl font-bold text-amber-600">{data.lenormand_card.moon_decan}</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	)
 

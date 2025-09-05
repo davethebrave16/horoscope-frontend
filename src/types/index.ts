@@ -66,6 +66,7 @@ export interface HoroscopeResponse {
 	success: boolean
 	birth_data: BirthData
 	horoscope: HoroscopeData
+	lenormand_card: LenormandCard
 }
 
 export interface GeocodingResult {
@@ -124,6 +125,12 @@ export interface TransitParameters {
 	}
 	planet: string
 	step_minutes: number
+}
+
+export interface LenormandCard {
+	card: string
+	moon_sign: string
+	moon_decan: number
 }
 
 export interface TransitResponse {
