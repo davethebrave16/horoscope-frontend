@@ -44,22 +44,32 @@ export interface AspectsResponse {
 	aspects: AspectData[]
 }
 
-export interface MoonPosition {
-	sign: string
-	decan: string
-	degree_in_sign: number
-	absolute_longitude: number
+
+export interface MoonPhaseData {
+	phase_name: string
+	age_days: number
+	fraction_of_cycle: number
+	illuminated_fraction: number
+	julian_date: number
 }
 
-export interface ReferencePoints {
-	ascendant_longitude: number
-	descendant_longitude: number
+export interface MoonPhaseRequestData {
+	date: {
+		year: number
+		month: number
+		day: number
+	}
+	time: {
+		hour: number
+		minute: number
+		second: number
+	}
 }
 
 export interface MoonPhaseResponse {
-	moon_phase: string
-	moon_position: MoonPosition
-	reference_points: ReferencePoints
+	success: boolean
+	moon_phase: MoonPhaseData
+	request_data: MoonPhaseRequestData
 }
 
 export interface HoroscopeResponse {

@@ -67,14 +67,21 @@
 	"moonPhase": {
 		"title": "Moon Phase Data",
 		"moonPhase": "Moon Phase",
-		"moonPosition": "Moon Position",
-		"sign": "Sign",
-		"decan": "Decan",
-		"degreeInSign": "Degree in Sign",
-		"absoluteLongitude": "Absolute Longitude",
-		"referencePoints": "Reference Points",
-		"ascendantLongitude": "Ascendant Longitude",
-		"descendantLongitude": "Descendant Longitude"
+		"phaseName": "Phase Name",
+		"ageDays": "Age (Days)",
+		"fractionOfCycle": "Fraction of Cycle",
+		"illuminatedFraction": "Illuminated Fraction",
+		"julianDate": "Julian Date",
+		"phases": {
+			"New Moon": "New Moon",
+			"Waxing Crescent": "Waxing Crescent",
+			"First Quarter": "First Quarter",
+			"Waxing Gibbous": "Waxing Gibbous",
+			"Full Moon": "Full Moon",
+			"Waning Gibbous": "Waning Gibbous",
+			"Last Quarter": "Last Quarter",
+			"Waning Crescent": "Waning Crescent"
+		}
 	},
 	"transits": {
 		"title": "Transits",

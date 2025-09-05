@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { HoroscopeResponse, AspectsResponse, MoonPhaseResponse } from '../../types'
-import { translatePlanet, translateSign, translateCard, translateAspect, translateAngle } from '../../utils/translations'
+import { translatePlanet, translateSign, translateCard, translateAspect, translateAngle, translateMoonPhase } from '../../utils/translations'
 
 interface HoroscopeResultsProps {
 	content: HoroscopeResponse | AspectsResponse | MoonPhaseResponse
@@ -150,54 +150,52 @@ export const HoroscopeResults: React.FC<HoroscopeResultsProps> = ({ content, tit
 
 	const renderMoonPhaseData = (data: MoonPhaseResponse) => (
 		<div className="space-y-8">
+			{/* Request Data */}
+			<div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6">
+				<h4 className="mb-4 text-xl font-bold text-green-800 flex items-center">
+					<span className="mr-2">📅</span>
+					{t('horoscope.birthData')}
+				</h4>
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('horoscope.date')}</p>
+						<p className="text-lg font-bold text-gray-900">{data.request_data.date.day}/{data.request_data.date.month}/{data.request_data.date.year}</p>
+					</div>
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('horoscope.time')}</p>
+						<p className="text-lg font-bold text-gray-900">{data.request_data.time.hour}:{data.request_data.time.minute.toString().padStart(2, '0')}:{data.request_data.time.second.toString().padStart(2, '0')}</p>
+					</div>
+					<div className="bg-white rounded-xl p-4 shadow-sm">
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.julianDate')}</p>
+						<p className="text-lg font-bold text-gray-900">{data.moon_phase.julian_date.toFixed(6)}</p>
+					</div>
+				</div>
+			</div>
+
+			{/* Moon Phase Information */}
 			<div className="bg-gradient-to-r from-slate-50 to-gray-50 border border-slate-200 rounded-2xl p-6">
 				<h4 className="mb-4 text-xl font-bold text-slate-800 flex items-center">
 					<span className="mr-2">🌙</span>
 					{t('moonPhase.moonPhase')}
 				</h4>
-				<div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-slate-400">
-					<p className="text-lg font-semibold text-slate-700 italic">{data.moon_phase}</p>
-				</div>
-			</div>
-			
-			<div className="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 rounded-2xl p-6">
-				<h4 className="mb-4 text-xl font-bold text-cyan-800 flex items-center">
-					<span className="mr-2">🌕</span>
-					{t('moonPhase.moonPosition')}
-				</h4>
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.sign')}</p>
-						<p className="text-lg font-bold text-cyan-600">{translateSign(data.moon_position.sign, t)}</p>
+					<div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-slate-400">
+						<p className="text-sm font-semibold text-gray-600 mb-2">{t('moonPhase.phaseName')}</p>
+						<p className="text-xl font-bold text-slate-700 italic">
+							{translateMoonPhase(data.moon_phase.phase_name, data.moon_phase.fraction_of_cycle, t)}
+						</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.decan')}</p>
-						<p className="text-lg font-bold text-cyan-600">{data.moon_position.decan}</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.ageDays')}</p>
+						<p className="text-lg font-bold text-slate-600">{data.moon_phase.age_days.toFixed(2)}</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.degreeInSign')}</p>
-						<p className="text-lg font-bold text-cyan-600">{data.moon_position.degree_in_sign.toFixed(2)}°</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.fractionOfCycle')}</p>
+						<p className="text-lg font-bold text-slate-600">{(data.moon_phase.fraction_of_cycle * 100).toFixed(1)}%</p>
 					</div>
 					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.absoluteLongitude')}</p>
-						<p className="text-lg font-bold text-cyan-600">{data.moon_position.absolute_longitude.toFixed(2)}°</p>
-					</div>
-				</div>
-			</div>
-
-			<div className="bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 rounded-2xl p-6">
-				<h4 className="mb-4 text-xl font-bold text-violet-800 flex items-center">
-					<span className="mr-2">📐</span>
-					{t('moonPhase.referencePoints')}
-				</h4>
-				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.ascendantLongitude')}</p>
-						<p className="text-lg font-bold text-violet-600">{data.reference_points.ascendant_longitude.toFixed(2)}°</p>
-					</div>
-					<div className="bg-white rounded-xl p-4 shadow-sm">
-						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.descendantLongitude')}</p>
-						<p className="text-lg font-bold text-violet-600">{data.reference_points.descendant_longitude.toFixed(2)}°</p>
+						<p className="text-sm font-semibold text-gray-600 mb-1">{t('moonPhase.illuminatedFraction')}</p>
+						<p className="text-lg font-bold text-slate-600">{(data.moon_phase.illuminated_fraction * 100).toFixed(1)}%</p>
 					</div>
 				</div>
 			</div>
